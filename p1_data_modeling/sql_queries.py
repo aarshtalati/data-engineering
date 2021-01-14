@@ -3,7 +3,7 @@
 songplay_table_drop = "DROP TABLE IF EXISTS songplays CASCADE;"
 user_table_drop = "DROP TABLE IF EXISTS users CASCADE;"
 song_table_drop = "DROP TABLE IF EXISTS songs CASCADE;"
-artist_table_drop = "DROP TABLE IF EXISTS artist CASCADE;"
+artist_table_drop = "DROP TABLE IF EXISTS artists CASCADE;"
 time_table_drop = "DROP TABLE IF EXISTS time CASCADE;"
 
 # CREATE TABLES
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS songs(
 """)
 
 artist_table_create = ("""
-CREATE TABLE IF NOT EXISTS artist(
+CREATE TABLE IF NOT EXISTS artists(
         artist_id VARCHAR(20) PRIMARY KEY,
         name VARCHAR(500),
         location VARCHAR(5000),
@@ -67,19 +67,24 @@ CREATE TABLE IF NOT EXISTS time(
 # INSERT RECORDS
 
 songplay_table_insert = ("""
+INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
 """)
 
 user_table_insert = ("""
+INSERT INTO users (user_id, first_name, last_name, gender) VALUES (%s, %s, %s, %s)
 """)
 
 song_table_insert = ("""
+INSERT INTO songs(song_id, title, artist_id, year, duration) VALUES(%s, %s, %s, %s, %s)
 """)
 
 artist_table_insert = ("""
+INSERT INTO artists(artist_id, name, location, latitude, longitude) VALUES(%s, %s, %s, %s, %s)
 """)
 
 
 time_table_insert = ("""
+INSERT INTO time(start_time, hour, day, week, month, year, weekday) VALUES(%s, %s, %s, %s, %s, %s, %s)
 """)
 
 # FIND SONGS
