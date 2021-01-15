@@ -18,7 +18,19 @@ CREATE TABLE IF NOT EXISTS songplays(
         artist_id VARCHAR(20),
         session_id SMALLINT,
         location VARCHAR(5000),
-        user_agent VARCHAR(1000)
+        user_agent VARCHAR(1000),
+        CONSTRAINT fk_user
+                FOREIGN KEY(user_id)
+                        REFERENCES users(user_id)
+                        ON DELETE CASCADE,
+        CONSTRAINT fk_song
+                FOREIGN KEY(song_id)
+                        REFERENCES songs(song_id)
+                        ON DELETE CASCADE,
+        CONSTRAINT fk_artist
+                FOREIGN KEY(artist_id)
+                        REFERENCES artists(artist_id)
+                        ON DELETE CASCADE
 );
 """)
 
