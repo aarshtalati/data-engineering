@@ -36,13 +36,14 @@ CREATE TABLE IF NOT EXISTS songplays(
 
 user_table_create = ("""
 CREATE TABLE IF NOT EXISTS users(
-        user_id SMALLINT PRIMARY KEY,
+        user_id SMALLINT,
         first_name VARCHAR(200),
         last_name VARCHAR(200),
         gender CHAR(1),
         level VARCHAR(5) 
 );
 """)
+# user_id SMALLINT PRIMARY KEY,
 
 song_table_create = ("""
 CREATE TABLE IF NOT EXISTS songs(
@@ -79,29 +80,53 @@ CREATE TABLE IF NOT EXISTS time(
 # INSERT RECORDS
 
 songplay_table_insert = ("""
-INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) VALUES (%s, %s, %s, %s, %s, %s, %s, %s); COMMIT;
+INSERT INTO songplays 
+(start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) VALUES 
+(TO_TIMESTAMP(%s/1000), %s, %s, %s, %s, %s, %s, %s);
 """)
 
 user_table_insert = ("""
-INSERT INTO users (user_id, first_name, last_name, gender, level) VALUES (%s, %s, %s, %s, %s);
+INSERT INTO users (user_id, first_name, last_name, gender, level) VALUES 
+(%s, %s, %s, %s, %s);
 """)
 
 song_table_insert = ("""
-INSERT INTO songs(song_id, title, artist_id, year, duration) VALUES(%s, %s, %s, %s, CAST(%s AS INTERVAL));
+INSERT INTO songs
+(song_id, title, artist_id, year, duration) VALUES
+(%s, %s, %s, %s, CAST(%s AS INTERVAL))
+ON CONFLICT (song_id)
+DO NOTHING;
 """)
 
 artist_table_insert = ("""
-INSERT INTO artists(artist_id, name, location, latitude, longitude) VALUES(%s, %s, %s, %s, %s);
+INSERT INTO artists
+(artist_id, name, location, latitude, longitude) VALUES
+(%s, %s, %s, %s, %s)
+ON CONFLICT (artist_id)
+DO NOTHING;
 """)
 
 
 time_table_insert = ("""
-INSERT INTO time(start_time, hour, day, week, month, year, weekday) VALUES(%s, %s, %s, %s, %s, %s, %s);
+INSERT INTO time
+(start_time, hour, day, week, month, year, weekday) VALUES
+(%s, %s, %s, %s, %s, %s, %s)
+ON CONFLICT (start_time)
+DO NOTHING;
 """)
 
 # FIND SONGS
 
 song_select = ("""
+SELECT 
+    songs.song_id
+    , artists.artist_id 
+FROM songs 
+INNER JOIN artists 
+ON artists.artist_id = songs.artist_id 
+WHERE songs.title = %s 
+    AND artists.name = %s
+    AND songs.duration = CAST('%s' AS INTERVAL);
 """)
 
 # QUERY LISTS

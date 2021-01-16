@@ -1,4 +1,4 @@
 {
     "python.pythonPath": "/home/aarsh/anaconda3/envs/dev/bin/python",
-    "editor.fontFamily": "DejaVu Sans Mono"
+    "editor.fontFamily": "monospace"
 }
