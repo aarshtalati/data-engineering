@@ -22,9 +22,16 @@ Execute the following SQL command to find the most popular song:
 
 # Database Schema
 
+Entity Relationship Diagram:
+
+![Image of Yaktocat](er.png)
+
+
 This design uses star schema. Hence, the schema design is denormalized. It has fact table (songplays) and dimension tables (users, songs, artists, time). Each table has a primary key. Which could be used to reference with the other relative table(s). Execute the following command to set up the database schema:
 
     $ python create_tables.py
+
+
 
 # Extract, Transform, Load Pipeline
 
