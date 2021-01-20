@@ -21,18 +21,6 @@ CREATE TABLE IF NOT EXISTS songplays(
         user_agent VARCHAR(1000)
 );
 """)
-        #, CONSTRAINT fk_user
-        #         FOREIGN KEY(user_id)
-        #                 REFERENCES users(user_id)
-        #                 ON DELETE CASCADE
-        #, CONSTRAINT fk_song
-        #         FOREIGN KEY(song_id)
-        #                 REFERENCES songs(song_id)
-        #                 ON DELETE CASCADE
-        #, CONSTRAINT fk_artist
-        #         FOREIGN KEY(artist_id)
-        #                 REFERENCES artists(artist_id)
-        #                 ON DELETE CASCADE
 
 user_table_create = ("""
 CREATE TABLE IF NOT EXISTS users(
@@ -43,7 +31,6 @@ CREATE TABLE IF NOT EXISTS users(
         level VARCHAR(5) 
 );
 """)
-# user_id SMALLINT PRIMARY KEY,
 
 song_table_create = ("""
 CREATE TABLE IF NOT EXISTS songs(
@@ -75,7 +62,27 @@ CREATE TABLE IF NOT EXISTS time(
         year SMALLINT,
         weekday VARCHAR(10)
 );
+
+ALTER TABLE songplays
+        ADD CONSTRAINT fk_user
+                FOREIGN KEY(user_id)
+                        REFERENCES users(user_id)
+                        ON DELETE CASCADE
+        , ADD CONSTRAINT fk_song
+                FOREIGN KEY(song_id)
+                        REFERENCES songs(song_id)
+                        ON DELETE CASCADE
+        , ADD CONSTRAINT fk_artist
+                FOREIGN KEY(artist_id)
+                        REFERENCES artists(artist_id)
+                        ON DELETE CASCADE
+        ;
 """)
+
+# , ADD CONSTRAINT fk_time
+#                 FOREIGN KEY(start_time)
+#                         REFERENCES time(start_time)
+#                         ON DELETE CASCADE
 
 # INSERT RECORDS
 
