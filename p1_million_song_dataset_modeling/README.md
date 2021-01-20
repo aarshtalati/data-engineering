@@ -32,6 +32,14 @@ In principle, the ETL process reads the two different kinds of logs available, l
 
     $ python etl.py
 
+# File Structure
+
+1. `~/data/log_data`: datewise logs of user activities
+1. `~/data/song_data/.../`: contains song metadata
+1. `~/create_tables.py`: contains the re-runnable SQL script to create database schema. drops and creates your tables. You run this file to reset your tables before each time you run your ETL scripts.
+1. `~/etl.py`: contains ETL workflow. Reads and processes a single file from song_data and log_data and loads the data into your tables.
+1. `~/*.ipynb`: iron python workbooks. They contain step by step exaplainination of the code.
+
 # Citations
 
 Thierry Bertin-Mahieux, Daniel P.W. Ellis, Brian Whitman, and Paul Lamere. 
@@ -49,3 +57,5 @@ The PostgreSQL Global Development Group. “Data Types.” PostgreSQL Documentat
 EdChum. “Pandas Converting Row With Unix Timestamp (in Milliseconds) to Datetime.” Stack Overflow, 19 Jan. 2016, stackoverflow.com/questions/34883101/pandas-converting-row-with-unix-timestamp-in-milliseconds-to-datetime/34883876#34883876.
 
 “Million Song Dataset.” Thierry Bertin-Mahieux, Daniel P.W. Ellis, Brian Whitman, and Paul Lamere, 2011, http://millionsongdataset.com.
+
+Ran Feldesh, et al. “Jupyter/IPython Notebooks: Shortcut for ‘Run All’?” Stack Overflow, 29 Aug. 2019, stackoverflow.com/a/57712509.
