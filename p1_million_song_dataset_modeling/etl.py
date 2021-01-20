@@ -6,6 +6,13 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    '''
+    Performs ETL on song and artist metadata from JSON files and Inserts records in songs table and atists table.
+
+        Parameters:
+            cur: psycopg2 database cursor
+            filepath: string
+    '''
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -19,6 +26,13 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    '''
+    Performs ETL on log_data JSON files and Inserts records in time, users and songplays table.
+
+            Parameters:
+                cur: psycopg2 database cursor
+                filepath: string
+    '''
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -26,7 +40,7 @@ def process_log_file(cur, filepath):
     df = df[df.page == "NextSong"]
 
     # convert timestamp column to datetime
-    t = pd.to_datetime(df['ts'], unit='ms') # https://stackoverflow.com/a/34883876
+    t = pd.to_datetime(df['ts'], unit='ms')
     
     # insert time data records
     # time_data = list(zip(t.tolist(), t.dt.hour.tolist(), t.dt.day.tolist(), t.dt.week.tolist(), t.dt.month.tolist(), t.dt.year.tolist(), t.dt.dayofweek.tolist()))
@@ -62,6 +76,9 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    '''
+    Reads all files from the specified log segment and performes ETL.
+    '''
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
